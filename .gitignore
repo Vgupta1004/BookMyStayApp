@@ -1,3 +1,12 @@
+
+# Eclipse workspace metadata - should never be versioned
+.metadata/
+
+# Eclipse project files (also unnecessary for most teams)
+.project
+.classpath
+.settings/
+
 # Compiled class file
 *.class
 
