@@ -56,11 +56,36 @@ public class BookingService {
     
     /**
      * Returns the number of pending booking requests currently in the queue.
-     * This helps the system determine if there is work to be processed[cite: 111].
+     * This helps the system determine if there is work to be processed
      * * @return the current size of the request queue.
      */
     public int getQueueSize() {
         return requestQueue.size();
+    }
+    
+    /**
+     * Processes the next request and returns the unique Room ID assigned.
+     * This ID serves as the key for adding services in UC5.
+     * @return The unique Room ID (e.g., "SUITE-101") or null if no rooms are available.
+     */
+    public String processAndReturnId() {
+        if (requestQueue.isEmpty()) return null;
+
+        Reservation request = requestQueue.poll(); // FIFO Dequeue
+        RoomType type = request.getRequestedRoom();
+
+        if (inventory.getAvailableCount(type) > 0) {
+            // Generate Unique ID using room type and current count
+            String roomId = type.name() + "-" + (100 + inventory.getAvailableCount(type));
+            
+            // Add to HashSet to guarantee zero double-booking
+            if (occupiedRoomIds.add(roomId)) {
+                // Atomic update: decrement inventory count
+                inventory.updateCount(type, inventory.getAvailableCount(type) - 1);
+                return roomId;
+            }
+        }
+        return null; // Return null if allocation fails 
     }
 
 }
