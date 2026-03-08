@@ -1,10 +1,11 @@
 # BookMyStayApp
 A hotel booking app that lets guests search and reserve rooms/services on a first-come, first-served basis. It manages live inventory (room types, counts, prices, amenities), enforces availability holds, processes bookings, and tracks add-on services. Inventory updates atomically as reservations confirm, preventing double-booking.
 
-## Use Case 5: Add-On Service Selection
+## Use Case 6: Booking History & Reporting
 ### Description
-The goal is to Ensure booking fairness during peak demand.
+The goal is to Maintain complete booking history.
 Flow:-
- - Select Service
- - Add to List
- - Map to reservation ID
+ - Confirm booking
+ - Add to the list
+ - Persist
+ - Retrieve when needed
